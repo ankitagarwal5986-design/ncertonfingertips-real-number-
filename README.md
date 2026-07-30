@@ -5,476 +5,424 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NCERT on Finger Tips - Brain and Mind Academy</title>
 <style>
-    @page {
-        size: A4;
-        margin: 18mm 12mm 18mm 12mm;
-        background-color: #ffffff;
-        @top-center {
-            content: "NCERT on Finger Tips — Brain and Mind Academy";
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-size: 9pt;
-            font-weight: bold;
-            color: #1a365d;
-            border-bottom: 1px solid #cbd5e0;
-            padding-bottom: 4px;
-        }
-        @bottom-right {
-            content: "Page " counter(page) " of " counter(pages);
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-size: 8pt;
-            color: #7f8c8d;
-        }
-        @bottom-left {
-            content: "Class 10 CBSE Mathematics — Practice Question Bank";
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-size: 8pt;
-            color: #7f8c8d;
-        }
+    :root {
+        --primary-blue: #1e3a8a;
+        --secondary-gold: #d97706;
+        --bg-light: #f8fafc;
+        --card-bg: #ffffff;
+        --text-dark: #0f172a;
+        --correct-green: #059669;
+        --incorrect-red: #dc2626;
+    }
+
+    * {
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
     body {
-        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         margin: 0;
         padding: 20px;
-        color: #2d3748;
-        line-height: 1.5;
-        font-size: 10pt;
-        background-color: #f8fafc;
+        background-color: var(--bg-light);
+        color: var(--text-dark);
+        display: flex;
+        justify-content: center;
     }
 
-    .main-wrapper {
-        max-width: 900px;
-        margin: 0 auto;
-        background: #ffffff;
-        padding: 30px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        border-radius: 8px;
+    .quiz-card {
+        width: 100%;
+        max-width: 750px;
+        background: var(--card-bg);
+        border-radius: 12px;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
     }
 
-    .cover-header {
-        background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
-        color: #ffffff;
-        padding: 30px 20px;
-        margin: -30px -30px 30px -30px;
+    .header {
+        background: linear-gradient(135deg, #0f172a 0%, var(--primary-blue) 100%);
+        color: white;
+        padding: 25px 20px;
         text-align: center;
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
-        border-bottom: 5px solid #d97706;
+        border-bottom: 5px solid var(--secondary-gold);
     }
 
-    .cover-header h1 {
-        font-size: 26pt;
-        margin: 0 0 8px 0;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-        color: #f8fafc;
-        font-weight: 800;
-    }
-
-    .cover-header h2 {
-        font-size: 14pt;
-        margin: 0 0 10px 0;
-        font-weight: 600;
-        color: #fbbf24;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-
-    .cover-header p {
+    .header h1 {
         margin: 0;
-        font-size: 11pt;
-        color: #94a3b8;
+        font-size: 22px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
     }
 
-    .chapter-heading {
-        background-color: #1e293b;
-        color: #ffffff;
-        font-size: 14pt;
-        font-weight: bold;
-        padding: 10px 15px;
+    .header h2 {
+        margin: 5px 0 0 0;
+        font-size: 14px;
+        color: #fcd34d;
+        font-weight: 500;
+    }
+
+    .controls {
+        padding: 15px 20px;
+        background: #e2e8f0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    select {
+        padding: 8px 12px;
         border-radius: 6px;
-        margin-top: 35px;
-        margin-bottom: 20px;
-        page-break-after: avoid;
+        border: 1px solid #cbd5e0;
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text-dark);
+        background: white;
+        cursor: pointer;
     }
 
-    .q-container {
-        margin-bottom: 16px;
-        padding: 12px 15px;
-        border: 1px solid #e2e8f0;
-        border-radius: 6px;
-        background-color: #ffffff;
-        page-break-inside: avoid;
+    .progress-bar-container {
+        height: 6px;
+        background: #cbd5e0;
+        width: 100%;
     }
 
-    .q-title {
+    .progress-bar {
+        height: 100%;
+        width: 0%;
+        background: var(--secondary-gold);
+        transition: width 0.3s ease;
+    }
+
+    .quiz-body {
+        padding: 25px 20px;
+    }
+
+    .q-number {
+        font-size: 13px;
         font-weight: 700;
-        color: #0f172a;
+        color: #2563eb;
+        text-transform: uppercase;
         margin-bottom: 8px;
     }
 
-    .q-num {
-        color: #2563eb;
-        margin-right: 4px;
-    }
-
-    .options-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-left: 5px;
-        margin-bottom: 4px;
-    }
-
-    .options-table td {
-        width: 50%;
-        padding: 4px 8px;
-        color: #334155;
-    }
-
-    .math {
-        font-family: 'Times New Roman', serif;
-        font-style: italic;
-        font-weight: bold;
-    }
-
-    .answer-key-section {
-        margin-top: 50px;
-        page-break-before: always;
-    }
-
-    .ak-heading {
-        background-color: #047857;
-        color: #ffffff;
-        font-size: 18pt;
-        font-weight: bold;
-        padding: 12px;
-        text-align: center;
-        border-radius: 6px;
+    .question-text {
+        font-size: 16px;
+        font-weight: 600;
         margin-bottom: 20px;
+        line-height: 1.5;
     }
 
-    .ak-chapter {
-        font-size: 13pt;
-        font-weight: bold;
+    .options-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 20px 0;
+    }
+
+    .option-item {
+        padding: 12px 16px;
+        margin-bottom: 10px;
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+    }
+
+    .option-item:hover {
+        border-color: #93c5fd;
+        background-color: #eff6ff;
+    }
+
+    .option-item.selected {
+        border-color: #2563eb;
+        background-color: #dbeafe;
+        font-weight: 600;
+    }
+
+    .option-item.correct {
+        border-color: var(--correct-green);
+        background-color: #d1fae5;
         color: #065f46;
-        border-bottom: 2px solid #059669;
-        padding-bottom: 4px;
-        margin-top: 25px;
-        margin-bottom: 12px;
-        page-break-after: avoid;
+        font-weight: 600;
     }
 
-    .ak-table {
-        width: 100%;
-        border-collapse: collapse;
+    .option-item.wrong {
+        border-color: var(--incorrect-red);
+        background-color: #fee2e2;
+        color: #991b1b;
+    }
+
+    .explanation-box {
+        display: none;
+        padding: 15px;
+        border-radius: 8px;
+        background: #f1f5f9;
+        border-left: 4px solid #2563eb;
         margin-bottom: 20px;
+        font-size: 13.5px;
+        line-height: 1.5;
     }
 
-    .ak-table th, .ak-table td {
-        border: 1px solid #cbd5e0;
-        padding: 6px 10px;
-        text-align: left;
-        font-size: 9pt;
+    .explanation-box strong {
+        color: #1e293b;
     }
 
-    .ak-table th {
-        background-color: #f1f5f9;
-        color: #0f172a;
-        font-weight: bold;
+    .footer-btn-group {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
     }
 
-    .ak-table tr:nth-child(even) {
-        background-color: #f8fafc;
+    button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .btn-check {
+        background: #2563eb;
+        color: white;
+    }
+
+    .btn-check:hover {
+        background: #1d4ed8;
+    }
+
+    .btn-next {
+        background: var(--secondary-gold);
+        color: white;
+    }
+
+    .btn-next:hover {
+        background: #b45309;
+    }
+
+    button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .score-screen {
+        text-align: center;
+        padding: 40px 20px;
+        display: none;
+    }
+
+    .score-screen h2 {
+        font-size: 24px;
+        color: var(--primary-blue);
+    }
+
+    .score-badge {
+        font-size: 40px;
+        font-weight: 800;
+        color: var(--secondary-gold);
+        margin: 15px 0;
     }
 </style>
 </head>
 <body>
 
-<div class="main-wrapper">
+<div class="quiz-card">
+    <div class="header">
+        <h1>NCERT ON FINGER TIPS</h1>
+        <h2>BY BRAIN AND MIND ACADEMY</h2>
+    </div>
 
-<div class="cover-header">
-    <h1>NCERT ON FINGER TIPS</h1>
-    <h2>BY BRAIN AND MIND ACADEMY</h2>
-    <p>Class 10 CBSE Mathematics — Master Question Bank (Chapters 1 to 6)</p>
+    <div class="controls">
+        <label for="chapterSelect"><strong>Select Chapter:</strong></label>
+        <select id="chapterSelect" onchange="loadChapter()">
+            <option value="ch1">Ch 1: Real Numbers</option>
+            <option value="ch2">Ch 2: Polynomials</option>
+            <option value="ch3">Ch 3: Pair of Linear Equations</option>
+            <option value="ch4">Ch 4: Quadratic Equations</option>
+            <option value="ch5">Ch 5: Arithmetic Progressions</option>
+            <option value="ch6">Ch 6: Triangles</option>
+        </select>
+    </div>
+
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Interactive Quiz View -->
+    <div class="quiz-body" id="quizBody">
+        <div class="q-number" id="qNumber">Question 1 of 10</div>
+        <div class="question-text" id="questionText">Loading Question...</div>
+
+        <ul class="options-list" id="optionsList"></ul>
+
+        <div class="explanation-box" id="explanationBox">
+            <strong>Rationale:</strong> <span id="explanationText"></span>
+        </div>
+
+        <div class="footer-btn-group">
+            <button class="btn-check" id="checkBtn" onclick="checkAnswer()" disabled>Check Answer</button>
+            <button class="btn-next" id="nextBtn" onclick="nextQuestion()" style="display: none;">Next Question →</button>
+        </div>
+    </div>
+
+    <!-- Final Score View -->
+    <div class="score-screen" id="scoreScreen">
+        <h2>Chapter Completed!</h2>
+        <p>Your Final Score:</p>
+        <div class="score-badge" id="finalScore">0 / 0</div>
+        <button class="btn-check" onclick="restartQuiz()">Restart Chapter</button>
+    </div>
 </div>
 
-<!-- CHAPTER 1 -->
-<div class="chapter-heading">CHAPTER 1: REAL NUMBERS (40 QUESTIONS)</div>
+<script>
+// Master Question Bank (Chapters 1 to 6)
+const quizData = {
+    ch1: [
+        { q: "If two positive integers a and b are written as a = x³y² and b = xy³, where x, y are prime numbers, then HCF(a, b) is:", opts: ["xy", "xy²", "x³y³", "x²y²"], ans: 1, rat: "HCF is product of smallest power of each common prime factor: x¹ · y² = xy²." },
+        { q: "If LCM(77, 99) = 693, then HCF(77, 99) is:", opts: ["11", "7", "9", "22"], ans: 0, rat: "HCF × LCM = a × b ⇒ HCF = (77 × 99)/693 = 11." },
+        { q: "The largest number which divides 70 and 125, leaving remainders 5 and 8 respectively, is:", opts: ["13", "65", "875", "1750"], ans: 0, rat: "HCF(70-5, 125-8) = HCF(65, 117) = 13." },
+        { q: "If p and q are co-prime numbers, then p² and q² are:", opts: ["Co-prime", "Not co-prime", "Even numbers", "Odd numbers"], ans: 0, rat: "Squares of co-prime numbers share no common factors and are always co-prime." },
+        { q: "The ratio of LCM and HCF of the least composite and the least prime number is:", opts: ["1 : 2", "2 : 1", "1 : 1", "1 : 3"], ans: 1, rat: "Least prime = 2, least composite = 4. LCM(2,4)=4, HCF(2,4)=2. Ratio = 4:2 = 2:1." }
+    ],
+    ch2: [
+        { q: "If one zero of the quadratic polynomial x² + 3x + k is 2, then the value of k is:", opts: ["10", "-10", "-7", "-2"], ans: 1, rat: "2² + 3(2) + k = 0 ⇒ 4 + 6 + k = 0 ⇒ k = -10." },
+        { q: "A quadratic polynomial, whose zeroes are -3 and 4, is:", opts: ["x² - x - 12", "x² + x + 12", "x²/2 - x/2 - 6", "x² + 2x - 24"], ans: 2, rat: "S = 1, P = -12. Polynomial k(x² - x - 12). For k = 1/2, it is x²/2 - x/2 - 6." },
+        { q: "If the zeroes of the quadratic polynomial ax² + bx + c are equal, then:", opts: ["c and a have opposite signs", "c and b have opposite signs", "c and a have the same sign", "c and b have same sign"], ans: 2, rat: "D = b² - 4ac = 0 ⇒ b² = 4ac > 0 ⇒ a and c must have the same sign." },
+        { q: "If α, β are zeroes of f(x) = x² - p(x + 1) - c, then (α + 1)(β + 1) =", opts: ["c", "1 - c", "c - 1", "1 + c"], ans: 1, rat: "f(x) = x² - px - (p + c). α+β = p, αβ = -(p+c). (α+1)(β+1) = αβ + α + β + 1 = -(p+c) + p + 1 = 1 - c." }
+    ],
+    ch3: [
+        { q: "If the system x + 2y = 3 and 5x + ky + 7 = 0 has no solution, then k is:", opts: ["10", "-10", "5/2", "-5/2"], ans: 0, rat: "a₁/a₂ = b₁/b₂ ≠ c₁/c₂ ⇒ 1/5 = 2/k ⇒ k = 10." },
+        { q: "The pair of equations y = 0 and y = -7 has:", opts: ["One solution", "Two solutions", "Infinitely many solutions", "No solution"], ans: 3, rat: "Horizontal parallel lines never intersect, so no solution." },
+        { q: "If 217x + 131y = 913 and 131x + 217y = 827, then x + y =", opts: ["5", "6", "7", "8"], ans: 0, rat: "Adding both equations: 348x + 348y = 1740 ⇒ x + y = 5." }
+    ],
+    ch4: [
+        { q: "Which of the following is a quadratic equation?", opts: ["x² + 2x + 1 = (4 - x)² + 3", "-2x² = (5 - x)(2 - 2/5 x)", "(k + 1)x² + 3/2 x = 7 (k = -1)", "x³ - x² = (x - 1)³"], ans: 3, rat: "x³ - x² = x³ - 3x² + 3x - 1 ⇒ 2x² - 3x + 1 = 0 (Degree 2)." },
+        { q: "The quadratic equation 2x² - √5 x + 1 = 0 has:", opts: ["Two distinct real roots", "Two equal real roots", "No real roots", "More than 2 real roots"], ans: 2, rat: "D = (-√5)² - 4(2)(1) = 5 - 8 = -3 < 0 (No real roots)." },
+        { q: "Values of k for which 2x² - kx + k = 0 has equal roots are:", opts: ["0 only", "4", "8 only", "0, 8"], ans: 3, rat: "D = k² - 8k = 0 ⇒ k(k - 8) = 0 ⇒ k = 0, 8." }
+    ],
+    ch5: [
+        { q: "If 11th term of an AP is 38 and 16th term is 73, then 31st term is:", opts: ["178", "170", "150", "185"], ans: 0, rat: "a+10d=38, a+15d=73 ⇒ 5d=35 ⇒ d=7, a=-32. a₃₁ = -32 + 30(7) = 178." },
+        { q: "The sum of first 100 positive integers is:", opts: ["5050", "5005", "5500", "50500"], ans: 0, rat: "S₁₀₀ = 100(101)/2 = 5050." },
+        { q: "If sum of first n terms of AP is 3n² + 5n, then 2nd term is:", opts: ["14", "11", "8", "17"], ans: 0, rat: "S₁ = 8 = a₁, S₂ = 22. a₂ = S₂ - S₁ = 22 - 8 = 14." }
+    ],
+    ch6: [
+        { q: "In ΔABC, DE || BC such that AD = 3 cm, DB = 5 cm, AC = 5.6 cm. Length of AE is:", opts: ["2.1 cm", "3.1 cm", "1.8 cm", "2.4 cm"], ans: 0, rat: "AD/AB = AE/AC ⇒ 3/8 = AE/5.6 ⇒ AE = (3 × 5.6)/8 = 2.1 cm." },
+        { q: "If ΔABC ~ ΔDEF such that 2AB = DE and BC = 8 cm, then EF =", opts: ["16 cm", "12 cm", "8 cm", "4 cm"], ans: 0, rat: "AB/DE = BC/EF ⇒ 1/2 = 8/EF ⇒ EF = 16 cm." },
+        { q: "Length of altitude of an equilateral triangle of side 8 cm is:", opts: ["4√3 cm", "2√3 cm", "8√3 cm", "4 cm"], ans: 0, rat: "h = (√3/2) × 8 = 4√3 cm." }
+    ]
+};
 
-<div class="q-container">
-    <div class="q-title"><span class="q-num">Q1.</span> If two positive integers a and b are written as a = x³y² and b = xy³, where x, y are prime numbers, then HCF(a, b) is:</div>
-    <table class="options-table">
-        <tr><td>A) xy</td><td>B) xy²</td></tr>
-        <tr><td>C) x³y³</td><td>D) x²y²</td></tr>
-    </table>
-</div>
+let currentChapter = "ch1";
+let currentIndex = 0;
+let selectedOption = null;
+let score = 0;
 
-<div class="q-container">
-    <div class="q-title"><span class="q-num">Q2.</span> If LCM(77, 99) = 693, then HCF(77, 99) is:</div>
-    <table class="options-table">
-        <tr><td>A) 11</td><td>B) 7</td></tr>
-        <tr><td>C) 9</td><td>D) 22</td></tr>
-    </table>
-</div>
+function loadChapter() {
+    currentChapter = document.getElementById("chapterSelect").value;
+    currentIndex = 0;
+    score = 0;
+    document.getElementById("quizBody").style.display = "block";
+    document.getElementById("scoreScreen").style.display = "none";
+    showQuestion();
+}
 
-<div class="q-container">
-    <div class="q-title"><span class="q-num">Q3.</span> The largest number which divides 70 and 125, leaving remainders 5 and 8 respectively, is:</div>
-    <table class="options-table">
-        <tr><td>A) 13</td><td>B) 65</td></tr>
-        <tr><td>C) 875</td><td>D) 1750</td></tr>
-    </table>
-</div>
+function showQuestion() {
+    const questions = quizData[currentChapter];
+    const qData = questions[currentIndex];
 
-<div class="q-container">
-    <div class="q-title"><span class="q-num">Q4.</span> If p and q are co-prime numbers, then p² and q² are:</div>
-    <table class="options-table">
-        <tr><td>A) Co-prime</td><td>B) Not co-prime</td></tr>
-        <tr><td>C) Even numbers</td><td>D) Odd numbers</td></tr>
-    </table>
-</div>
+    // Reset State
+    selectedOption = null;
+    document.getElementById("checkBtn").disabled = true;
+    document.getElementById("checkBtn").style.display = "inline-block";
+    document.getElementById("nextBtn").style.display = "none";
+    document.getElementById("explanationBox").style.display = "none";
 
-<div class="q-container">
-    <div class="q-title"><span class="q-num">Q5.</span> The ratio of LCM and HCF of the least composite and the least prime number is:</div>
-    <table class="options-table">
-        <tr><td>A) 1 : 2</td><td>B) 2 : 1</td></tr>
-        <tr><td>C) 1 : 1</td><td>D) 1 : 3</td></tr>
-    </table>
-</div>
+    // Progress
+    const progressPercent = ((currentIndex) / questions.length) * 100;
+    document.getElementById("progressBar").style.width = progressPercent + "%";
 
-<!-- CHAPTER 2 -->
-<div class="chapter-heading">CHAPTER 2: POLYNOMIALS (40 QUESTIONS)</div>
+    // Header info
+    document.getElementById("qNumber").innerText = `Question ${currentIndex + 1} of ${questions.length}`;
+    document.getElementById("questionText").innerText = qData.q;
 
-<div class="q-container">
-    <div class="q-title"><span class="q-num">Q41.</span> If one zero of the quadratic polynomial x² + 3x + k is 2, then the value of k is:</div>
-    <table class="options-table">
-        <tr><td>A) 10</td><td>B) -10</td></tr>
-        <tr><td>C) -7</td><td>D) -2</td></tr>
-    </table>
-</div>
+    // Render Options
+    const optionsList = document.getElementById("optionsList");
+    optionsList.innerHTML = "";
+    
+    qData.opts.forEach((optText, i) => {
+        const li = document.createElement("li");
+        li.className = "option-item";
+        li.innerHTML = `<strong>${String.fromCharCode(65 + i)})</strong>&nbsp; ${optText}`;
+        li.onclick = () => selectOption(i, li);
+        optionsList.appendChild(li);
+    });
+}
 
-<div class="q-container">
-    <div class="q-title"><span class="q-num">Q42.</span> A quadratic polynomial, whose zeroes are -3 and 4, is:</div>
-    <table class="options-table">
-        <tr><td>A) x² - x - 12</td><td>B) x² + x + 12</td></tr>
-        <tr><td>C) x²/2 - x/2 - 6</td><td>D) x² + 2x - 24</td></tr>
-    </table>
-</div>
+function selectOption(index, element) {
+    // Clear previous selection
+    const items = document.querySelectorAll(".option-item");
+    items.forEach(item => item.classList.remove("selected"));
 
-<!-- CHAPTER 3 -->
-<div class="chapter-heading">CHAPTER 3: PAIR OF LINEAR EQUATIONS IN TWO VARIABLES (40 QUESTIONS)</div>
+    selectedOption = index;
+    element.classList.add("selected");
+    document.getElementById("checkBtn").disabled = false;
+}
 
-<div class="q-container">
-    <div class="q-title"><span class="q-num">Q81.</span> If the system x + 2y = 3 and 5x + ky + 7 = 0 has no solution, then k is:</div>
-    <table class="options-table">
-        <tr><td>A) 10</td><td>B) -10</td></tr>
-        <tr><td>C) 5/2</td><td>D) -5/2</td></tr>
-    </table>
-</div>
+function checkAnswer() {
+    const questions = quizData[currentChapter];
+    const qData = questions[currentIndex];
+    const items = document.querySelectorAll(".option-item");
 
-<div class="q-container">
-    <div class="q-title"><span class="q-num">Q82.</span> The pair of equations y = 0 and y = -7 has:</div>
-    <table class="options-table">
-        <tr><td>A) One solution</td><td>B) Two solutions</td></tr>
-        <tr><td>C) Infinitely many solutions</td><td>D) No solution</td></tr>
-    </table>
-</div>
+    // Disable all options click
+    items.forEach(item => item.onclick = null);
 
-<!-- CHAPTER 4 -->
-<div class="chapter-heading">CHAPTER 4: QUADRATIC EQUATIONS (40 QUESTIONS)</div>
+    if (selectedOption === qData.ans) {
+        items[selectedOption].classList.add("correct");
+        score++;
+    } else {
+        items[selectedOption].classList.add("wrong");
+        items[qData.ans].classList.add("correct");
+    }
 
-<div class="q-container">
-    <div class="q-title"><span class="q-num">Q121.</span> Which of the following is a quadratic equation?</div>
-    <table class="options-table">
-        <tr><td>A) x² + 2x + 1 = (4 - x)² + 3</td><td>B) -2x² = (5 - x)(2 - 2/5 x)</td></tr>
-        <tr><td>C) (k + 1)x² + 3/2 x = 7 (k = -1)</td><td>D) x³ - x² = (x - 1)³</td></tr>
-    </table>
-</div>
+    // Display Explanation
+    document.getElementById("explanationText").innerText = qData.rat;
+    document.getElementById("explanationBox").style.display = "block";
 
-<!-- CHAPTER 5 -->
-<div class="chapter-heading">CHAPTER 5: ARITHMETIC PROGRESSIONS (40 QUESTIONS)</div>
+    // Toggle Buttons
+    document.getElementById("checkBtn").style.display = "none";
+    document.getElementById("nextBtn").style.display = "inline-block";
+}
 
-<div class="q-container">
-    <div class="q-title"><span class="q-num">Q161.</span> If 11th term of an AP is 38 and 16th term is 73, then 31st term is:</div>
-    <table class="options-table">
-        <tr><td>A) 178</td><td>B) 170</td></tr>
-        <tr><td>C) 150</td><td>D) 185</td></tr>
-    </table>
-</div>
+function nextQuestion() {
+    const questions = quizData[currentChapter];
+    currentIndex++;
 
-<!-- CHAPTER 6 -->
-<div class="chapter-heading">CHAPTER 6: TRIANGLES (40 QUESTIONS)</div>
+    if (currentIndex < questions.length) {
+        showQuestion();
+    } else {
+        showScoreScreen();
+    }
+}
 
-<div class="q-container">
-    <div class="q-title"><span class="q-num">Q201.</span> In ΔABC, DE || BC such that AD = 3 cm, DB = 5 cm, AC = 5.6 cm. Length of AE is:</div>
-    <table class="options-table">
-        <tr><td>A) 2.1 cm</td><td>B) 3.1 cm</td></tr>
-        <tr><td>C) 1.8 cm</td><td>D) 2.4 cm</td></tr>
-    </table>
-</div>
+function showScoreScreen() {
+    const questions = quizData[currentChapter];
+    document.getElementById("progressBar").style.width = "100%";
+    document.getElementById("quizBody").style.display = "none";
+    document.getElementById("scoreScreen").style.display = "block";
+    document.getElementById("finalScore").innerText = `${score} / ${questions.length}`;
+}
 
-<!-- ANSWER KEY SECTION -->
-<div class="answer-key-section">
-    <div class="ak-heading">COMPLETE ANSWER KEY & DETAILED EXPLANATIONS</div>
-    <p style="text-align:center; font-weight:bold; color:#475569;">NCERT on Finger Tips by Brain and Mind Academy</p>
+function restartQuiz() {
+    loadChapter();
+}
 
-    <div class="ak-chapter">Chapter 1: Real Numbers</div>
-    <table class="ak-table">
-        <thead>
-            <tr>
-                <th style="width:8%;">Q.No</th>
-                <th style="width:10%;">Ans</th>
-                <th style="width:25%;">Correct Option</th>
-                <th style="width:57%;">Detailed Rationale / Solution</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><b>Q1</b></td>
-                <td><b style="color:#059669;">B</b></td>
-                <td>xy²</td>
-                <td>HCF is product of smallest power of each common prime factor: x¹ · y² = xy².</td>
-            </tr>
-            <tr>
-                <td><b>Q2</b></td>
-                <td><b style="color:#059669;">A</b></td>
-                <td>11</td>
-                <td>HCF × LCM = a × b ⇒ HCF = (77 × 99)/693 = 11.</td>
-            </tr>
-            <tr>
-                <td><b>Q3</b></td>
-                <td><b style="color:#059669;">A</b></td>
-                <td>13</td>
-                <td>HCF(70-5, 125-8) = HCF(65, 117) = 13.</td>
-            </tr>
-            <tr>
-                <td><b>Q4</b></td>
-                <td><b style="color:#059669;">A</b></td>
-                <td>Co-prime</td>
-                <td>Squares of co-prime numbers share no common factors and are always co-prime.</td>
-            </tr>
-            <tr>
-                <td><b>Q5</b></td>
-                <td><b style="color:#059669;">B</b></td>
-                <td>2 : 1</td>
-                <td>Least prime = 2, least composite = 4. LCM(2,4)=4, HCF(2,4)=2. Ratio = 4:2 = 2:1.</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="ak-chapter">Chapter 2: Polynomials</div>
-    <table class="ak-table">
-        <thead>
-            <tr>
-                <th style="width:8%;">Q.No</th>
-                <th style="width:10%;">Ans</th>
-                <th style="width:25%;">Correct Option</th>
-                <th style="width:57%;">Detailed Rationale / Solution</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><b>Q41</b></td>
-                <td><b style="color:#059669;">B</b></td>
-                <td>-10</td>
-                <td>2² + 3(2) + k = 0 ⇒ 4 + 6 + k = 0 ⇒ k = -10.</td>
-            </tr>
-            <tr>
-                <td><b>Q42</b></td>
-                <td><b style="color:#059669;">C</b></td>
-                <td>x²/2 - x/2 - 6</td>
-                <td>S = 1, P = -12. Polynomial k(x² - x - 12). For k = 1/2, it is x²/2 - x/2 - 6.</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="ak-chapter">Chapter 3: Pair of Linear Equations in Two Variables</div>
-    <table class="ak-table">
-        <thead>
-            <tr>
-                <th style="width:8%;">Q.No</th>
-                <th style="width:10%;">Ans</th>
-                <th style="width:25%;">Correct Option</th>
-                <th style="width:57%;">Detailed Rationale / Solution</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><b>Q81</b></td>
-                <td><b style="color:#059669;">A</b></td>
-                <td>10</td>
-                <td>a₁/a₂ = b₁/b₂ ≠ c₁/c₂ ⇒ 1/5 = 2/k ⇒ k = 10.</td>
-            </tr>
-            <tr>
-                <td><b>Q82</b></td>
-                <td><b style="color:#059669;">D</b></td>
-                <td>No solution</td>
-                <td>Horizontal parallel lines never intersect, so no solution.</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="ak-chapter">Chapter 4: Quadratic Equations</div>
-    <table class="ak-table">
-        <thead>
-            <tr>
-                <th style="width:8%;">Q.No</th>
-                <th style="width:10%;">Ans</th>
-                <th style="width:25%;">Correct Option</th>
-                <th style="width:57%;">Detailed Rationale / Solution</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><b>Q121</b></td>
-                <td><b style="color:#059669;">D</b></td>
-                <td>x³ - x² = (x - 1)³</td>
-                <td>x³ - x² = x³ - 3x² + 3x - 1 ⇒ 2x² - 3x + 1 = 0 (Degree 2).</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="ak-chapter">Chapter 5: Arithmetic Progressions</div>
-    <table class="ak-table">
-        <thead>
-            <tr>
-                <th style="width:8%;">Q.No</th>
-                <th style="width:10%;">Ans</th>
-                <th style="width:25%;">Correct Option</th>
-                <th style="width:57%;">Detailed Rationale / Solution</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><b>Q161</b></td>
-                <td><b style="color:#059669;">A</b></td>
-                <td>178</td>
-                <td>a+10d=38, a+15d=73 ⇒ 5d=35 ⇒ d=7, a=-32. a₃₁ = -32 + 30(7) = 178.</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="ak-chapter">Chapter 6: Triangles</div>
-    <table class="ak-table">
-        <thead>
-            <tr>
-                <th style="width:8%;">Q.No</th>
-                <th style="width:10%;">Ans</th>
-                <th style="width:25%;">Correct Option</th>
-                <th style="width:57%;">Detailed Rationale / Solution</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><b>Q201</b></td>
-                <td><b style="color:#059669;">A</b></td>
-                <td>2.1 cm</td>
-                <td>AD/AB = AE/AC ⇒ 3/8 = AE/5.6 ⇒ AE = (3 × 5.6)/8 = 2.1 cm.</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-</div>
+// Initial Load
+loadChapter();
+</script>
 
 </body>
 </html>
