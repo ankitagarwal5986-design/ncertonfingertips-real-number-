@@ -239,12 +239,7 @@
     <div class="controls">
         <label for="chapterSelect"><strong>Select Chapter:</strong></label>
         <select id="chapterSelect" onchange="loadChapter()">
-            <option value="ch1">Ch 1: Real Numbers</option>
-            <option value="ch2">Ch 2: Polynomials</option>
-            <option value="ch3">Ch 3: Pair of Linear Equations</option>
-            <option value="ch4">Ch 4: Quadratic Equations</option>
-            <option value="ch5">Ch 5: Arithmetic Progressions</option>
-            <option value="ch6">Ch 6: Triangles</option>
+            <option value="ch1">Ch 1: Real Numbers (40 Questions)</option>
         </select>
     </div>
 
@@ -252,9 +247,8 @@
         <div class="progress-bar" id="progressBar"></div>
     </div>
 
-    <!-- Interactive Quiz View -->
     <div class="quiz-body" id="quizBody">
-        <div class="q-number" id="qNumber">Question 1 of 10</div>
+        <div class="q-number" id="qNumber">Question 1 of 40</div>
         <div class="question-text" id="questionText">Loading Question...</div>
 
         <ul class="options-list" id="optionsList"></ul>
@@ -269,50 +263,58 @@
         </div>
     </div>
 
-    <!-- Final Score View -->
     <div class="score-screen" id="scoreScreen">
         <h2>Chapter Completed!</h2>
         <p>Your Final Score:</p>
-        <div class="score-badge" id="finalScore">0 / 0</div>
+        <div class="score-badge" id="finalScore">0 / 40</div>
         <button class="btn-check" onclick="restartQuiz()">Restart Chapter</button>
     </div>
 </div>
 
 <script>
-// Master Question Bank (Chapters 1 to 6)
+// Chapter 1: Real Numbers - Full 40 Questions
 const quizData = {
     ch1: [
-        { q: "If two positive integers a and b are written as a = x³y² and b = xy³, where x, y are prime numbers, then HCF(a, b) is:", opts: ["xy", "xy²", "x³y³", "x²y²"], ans: 1, rat: "HCF is product of smallest power of each common prime factor: x¹ · y² = xy²." },
-        { q: "If LCM(77, 99) = 693, then HCF(77, 99) is:", opts: ["11", "7", "9", "22"], ans: 0, rat: "HCF × LCM = a × b ⇒ HCF = (77 × 99)/693 = 11." },
-        { q: "The largest number which divides 70 and 125, leaving remainders 5 and 8 respectively, is:", opts: ["13", "65", "875", "1750"], ans: 0, rat: "HCF(70-5, 125-8) = HCF(65, 117) = 13." },
+        { q: "If two positive integers a and b are written as a = x³y² and b = xy³, where x, y are prime numbers, then HCF(a, b) is:", opts: ["xy", "xy²", "x³y³", "x²y²"], ans: 1, rat: "HCF is the product of the smallest power of each common prime factor involved: x¹ · y² = xy²." },
+        { q: "If LCM(77, 99) = 693, then HCF(77, 99) is:", opts: ["11", "7", "9", "22"], ans: 0, rat: "HCF × LCM = a × b ⇒ HCF = (77 × 99) / 693 = 11." },
+        { q: "The largest number which divides 70 and 125, leaving remainders 5 and 8 respectively, is:", opts: ["13", "65", "875", "1750"], ans: 0, rat: "Required Number = HCF(70 - 5, 125 - 8) = HCF(65, 117) = 13." },
         { q: "If p and q are co-prime numbers, then p² and q² are:", opts: ["Co-prime", "Not co-prime", "Even numbers", "Odd numbers"], ans: 0, rat: "Squares of co-prime numbers share no common factors and are always co-prime." },
-        { q: "The ratio of LCM and HCF of the least composite and the least prime number is:", opts: ["1 : 2", "2 : 1", "1 : 1", "1 : 3"], ans: 1, rat: "Least prime = 2, least composite = 4. LCM(2,4)=4, HCF(2,4)=2. Ratio = 4:2 = 2:1." }
-    ],
-    ch2: [
-        { q: "If one zero of the quadratic polynomial x² + 3x + k is 2, then the value of k is:", opts: ["10", "-10", "-7", "-2"], ans: 1, rat: "2² + 3(2) + k = 0 ⇒ 4 + 6 + k = 0 ⇒ k = -10." },
-        { q: "A quadratic polynomial, whose zeroes are -3 and 4, is:", opts: ["x² - x - 12", "x² + x + 12", "x²/2 - x/2 - 6", "x² + 2x - 24"], ans: 2, rat: "S = 1, P = -12. Polynomial k(x² - x - 12). For k = 1/2, it is x²/2 - x/2 - 6." },
-        { q: "If the zeroes of the quadratic polynomial ax² + bx + c are equal, then:", opts: ["c and a have opposite signs", "c and b have opposite signs", "c and a have the same sign", "c and b have same sign"], ans: 2, rat: "D = b² - 4ac = 0 ⇒ b² = 4ac > 0 ⇒ a and c must have the same sign." },
-        { q: "If α, β are zeroes of f(x) = x² - p(x + 1) - c, then (α + 1)(β + 1) =", opts: ["c", "1 - c", "c - 1", "1 + c"], ans: 1, rat: "f(x) = x² - px - (p + c). α+β = p, αβ = -(p+c). (α+1)(β+1) = αβ + α + β + 1 = -(p+c) + p + 1 = 1 - c." }
-    ],
-    ch3: [
-        { q: "If the system x + 2y = 3 and 5x + ky + 7 = 0 has no solution, then k is:", opts: ["10", "-10", "5/2", "-5/2"], ans: 0, rat: "a₁/a₂ = b₁/b₂ ≠ c₁/c₂ ⇒ 1/5 = 2/k ⇒ k = 10." },
-        { q: "The pair of equations y = 0 and y = -7 has:", opts: ["One solution", "Two solutions", "Infinitely many solutions", "No solution"], ans: 3, rat: "Horizontal parallel lines never intersect, so no solution." },
-        { q: "If 217x + 131y = 913 and 131x + 217y = 827, then x + y =", opts: ["5", "6", "7", "8"], ans: 0, rat: "Adding both equations: 348x + 348y = 1740 ⇒ x + y = 5." }
-    ],
-    ch4: [
-        { q: "Which of the following is a quadratic equation?", opts: ["x² + 2x + 1 = (4 - x)² + 3", "-2x² = (5 - x)(2 - 2/5 x)", "(k + 1)x² + 3/2 x = 7 (k = -1)", "x³ - x² = (x - 1)³"], ans: 3, rat: "x³ - x² = x³ - 3x² + 3x - 1 ⇒ 2x² - 3x + 1 = 0 (Degree 2)." },
-        { q: "The quadratic equation 2x² - √5 x + 1 = 0 has:", opts: ["Two distinct real roots", "Two equal real roots", "No real roots", "More than 2 real roots"], ans: 2, rat: "D = (-√5)² - 4(2)(1) = 5 - 8 = -3 < 0 (No real roots)." },
-        { q: "Values of k for which 2x² - kx + k = 0 has equal roots are:", opts: ["0 only", "4", "8 only", "0, 8"], ans: 3, rat: "D = k² - 8k = 0 ⇒ k(k - 8) = 0 ⇒ k = 0, 8." }
-    ],
-    ch5: [
-        { q: "If 11th term of an AP is 38 and 16th term is 73, then 31st term is:", opts: ["178", "170", "150", "185"], ans: 0, rat: "a+10d=38, a+15d=73 ⇒ 5d=35 ⇒ d=7, a=-32. a₃₁ = -32 + 30(7) = 178." },
-        { q: "The sum of first 100 positive integers is:", opts: ["5050", "5005", "5500", "50500"], ans: 0, rat: "S₁₀₀ = 100(101)/2 = 5050." },
-        { q: "If sum of first n terms of AP is 3n² + 5n, then 2nd term is:", opts: ["14", "11", "8", "17"], ans: 0, rat: "S₁ = 8 = a₁, S₂ = 22. a₂ = S₂ - S₁ = 22 - 8 = 14." }
-    ],
-    ch6: [
-        { q: "In ΔABC, DE || BC such that AD = 3 cm, DB = 5 cm, AC = 5.6 cm. Length of AE is:", opts: ["2.1 cm", "3.1 cm", "1.8 cm", "2.4 cm"], ans: 0, rat: "AD/AB = AE/AC ⇒ 3/8 = AE/5.6 ⇒ AE = (3 × 5.6)/8 = 2.1 cm." },
-        { q: "If ΔABC ~ ΔDEF such that 2AB = DE and BC = 8 cm, then EF =", opts: ["16 cm", "12 cm", "8 cm", "4 cm"], ans: 0, rat: "AB/DE = BC/EF ⇒ 1/2 = 8/EF ⇒ EF = 16 cm." },
-        { q: "Length of altitude of an equilateral triangle of side 8 cm is:", opts: ["4√3 cm", "2√3 cm", "8√3 cm", "4 cm"], ans: 0, rat: "h = (√3/2) × 8 = 4√3 cm." }
+        { q: "The ratio of LCM and HCF of the least composite and the least prime number is:", opts: ["1 : 2", "2 : 1", "1 : 1", "1 : 3"], ans: 1, rat: "Least prime = 2, least composite = 4. LCM(2, 4) = 4, HCF(2, 4) = 2. Ratio = 4 : 2 = 2 : 1." },
+        { q: "If n is any natural number, then 6ⁿ - 5ⁿ always ends with digit:", opts: ["1", "3", "5", "7"], ans: 0, rat: "6ⁿ always ends with digit 6, and 5ⁿ always ends with 5. Difference 6 - 5 = 1." },
+        { q: "The total number of factors of a prime number is:", opts: ["1", "2", "0", "3"], ans: 1, rat: "A prime number has exactly two factors: 1 and the number itself." },
+        { q: "If HCF(306, 657) = 9, then LCM(306, 657) is:", opts: ["22338", "22328", "22238", "23238"], ans: 0, rat: "LCM = (306 × 657) / 9 = 22338." },
+        { q: "The exponent of 2 in the prime factorization of 144 is:", opts: ["2", "4", "1", "6"], ans: 1, rat: "144 = 2⁴ × 3². The exponent of prime factor 2 is 4." },
+        { q: "The sum of exponents of prime factors in the prime factorization of 196 is:", opts: ["3", "4", "5", "2"], ans: 1, rat: "196 = 2² × 7². Sum of exponents = 2 + 2 = 4." },
+        { q: "If a = 2³ × 3, b = 2 × 3 × 5, c = 3ⁿ × 5 and LCM(a, b, c) = 2³ × 3² × 5, then n =", opts: ["1", "2", "3", "4"], ans: 1, rat: "In LCM, we take the highest power of each prime factor. Power of 3 in LCM is 2, so n = 2." },
+        { q: "If two positive integers p and q can be expressed as p = ab² and q = a³b; a, b being prime numbers, then LCM(p, q) is:", opts: ["ab", "a²b²", "a³b²", "a³b³"], ans: 2, rat: "LCM takes the highest power of each prime factor: a³ · b² = a³b²." },
+        { q: "The product of a non-zero rational and an irrational number is:", opts: ["Always irrational", "Always rational", "Rational or Irrational", "Zero"], ans: 0, rat: "Multiplying any non-zero rational number by an irrational number always yields an irrational number." },
+        { q: "If the HCF of 65 and 117 is expressible in the form 65m - 117, then the value of m is:", opts: ["4", "2", "1", "3"], ans: 1, rat: "HCF(65, 117) = 13. Given 65m - 117 = 13 ⇒ 65m = 130 ⇒ m = 2." },
+        { q: "The least number that is divisible by all the numbers from 1 to 10 (both inclusive) is:", opts: ["10", "100", "504", "2520"], ans: 3, rat: "Required number is LCM(1, 2, 3, 4, 5, 6, 7, 8, 9, 10) = 2³ × 3² × 5 × 7 = 2520." },
+        { q: "If n is a natural number, then 9²ⁿ - 4²ⁿ is always divisible by:", opts: ["5", "13", "Both 5 and 13", "None of these"], ans: 2, rat: "aⁿ - bⁿ is divisible by both (a - b) and (a + b). (9² - 4²) = 81 - 16 = 65, which is divisible by 5 and 13." },
+        { q: "If HCF(a, b) = 12 and a × b = 1800, then LCM(a, b) is:", opts: ["3600", "150", "900", "120"], ans: 1, rat: "LCM = (a × b) / HCF = 1800 / 12 = 150." },
+        { q: "The value of x and y in the given factor tree are:", opts: ["x = 21, y = 84", "x = 42, y = 21", "x = 84, y = 21", "x = 42, y = 84"], ans: 2, rat: "In a factor tree, working bottom-up: y = 3 × 7 = 21, and x = 4 × y = 4 × 21 = 84." },
+        { q: "Three bells toll together at intervals of 9, 12, 15 minutes respectively. If they toll together now, after how much time will they toll together next?", opts: ["180 minutes", "360 minutes", "90 minutes", "60 minutes"], ans: 0, rat: "LCM(9, 12, 15) = 180 minutes (or 3 hours)." },
+        { q: "Which of the following is NOT an irrational number?", opts: ["(2 - √3)", "(2 + √3)", "(√2 + √3)²", "(2 + √3)(2 - √3)"], ans: 3, rat: "(2 + √3)(2 - √3) = 2² - (√3)² = 4 - 3 = 1, which is a rational number." },
+        { q: "The HCF of two numbers is 16 and their product is 3072. Their LCM is:", opts: ["180", "192", "196", "204"], ans: 1, rat: "LCM = Product / HCF = 3072 / 16 = 192." },
+        { q: "An event repeated after 20, 25, and 30 days respectively. If all three occur today, after how many days will they occur together again?", opts: ["300 days", "150 days", "120 days", "600 days"], ans: 0, rat: "LCM(20, 25, 30) = 300 days." },
+        { q: "If prime factorization of a natural number N is 2⁴ × 3² × 5³, total number of factors of N is:", opts: ["24", "60", "30", "40"], ans: 1, rat: "Total factors = (p + 1)(q + 1)(r + 1) = (4 + 1)(2 + 1)(3 + 1) = 5 × 3 × 4 = 60." },
+        { q: "If a and b are two consecutive natural numbers, then HCF(a, b) is:", opts: ["0", "1", "a", "b"], ans: 1, rat: "Any two consecutive natural numbers share no common factors other than 1." },
+        { q: "If HCF(p, q) = 1, then p and q are called:", opts: ["Prime numbers", "Co-prime numbers", "Composite numbers", "Twin primes"], ans: 1, rat: "Two numbers having highest common factor as 1 are defined as co-prime." },
+        { q: "What is the smallest prime number?", opts: ["0", "1", "2", "3"], ans: 2, rat: "The smallest prime number is 2 (also the only even prime)." },
+        { q: "The product of three consecutive positive integers is always divisible by:", opts: ["4", "6", "8", "12"], ans: 1, rat: "Out of three consecutive numbers, at least one is divisible by 2 and one by 3. Hence, product is divisible by 2 × 3 = 6." },
+        { q: "Which of the following numbers has a non-terminating repeating decimal expansion?", opts: ["17/8", "3/8", "29/343", "6/15"], ans: 2, rat: "343 = 7³. Denominator contains prime factors other than 2 and 5." },
+        { q: "If a = 2⁵ × 3³ and b = 2³ × 3⁴, then HCF(a, b) is:", opts: ["2³ × 3³", "2⁵ × 3⁴", "2² × 3³", "2³ × 3²"], ans: 0, rat: "HCF takes smallest power: 2³ × 3³ = 8 × 27 = 216." },
+        { q: "The sum of a rational and an irrational number is:", opts: ["Always rational", "Always irrational", "Zero", "Integer"], ans: 1, rat: "Adding a rational number to an irrational number always yields an irrational result." },
+        { q: "If LCM of two prime numbers p and q (p > q) is 221, then the value of 3p - q is:", opts: ["4", "28", "38", "48"], ans: 2, rat: "221 = 17 × 13. Since p > q, p = 17 and q = 13. 3(17) - 13 = 51 - 13 = 38." },
+        { q: "The number 0.375 expressed in p/q form (simplest form) has denominator q equal to:", opts: ["8", "125", "1000", "16"], ans: 0, rat: "0.375 = 375 / 1000 = 3 / 8. Thus denominator q = 8." },
+        { q: "If a and b are two prime numbers, then their LCM is:", opts: ["1", "a + b", "a × b", "a / b"], ans: 2, rat: "For prime numbers, LCM is simply their product (a × b)." },
+        { q: "If 2³ × 5² × x = 2000, then the value of x is:", opts: ["10", "8", "5", "2"], ans: 0, rat: "2³ × 5² = 8 × 25 = 200. Thus 200x = 2000 ⇒ x = 10." },
+        { q: "Find the HCF of 144 and 180:", opts: ["12", "18", "36", "72"], ans: 2, rat: "144 = 2⁴ × 3² and 180 = 2² × 3² × 5. HCF = 2² × 3² = 36." },
+        { q: "For any integer m, every odd integer is of the form:", opts: ["m", "m + 1", "2m", "2m + 1"], ans: 3, rat: "2m represents an even integer for any m, so 2m + 1 always represents an odd integer." },
+        { q: "If HCF(85, 153) = 85m - 153, then m is equal to:", opts: ["1", "2", "3", "4"], ans: 1, rat: "HCF(85, 153) = 17. 85m - 153 = 17 ⇒ 85m = 170 ⇒ m = 2." },
+        { q: "Number of decimal places after which 14587 / 1250 will terminate is:", opts: ["1", "2", "3", "4"], ans: 3, rat: "1250 = 2¹ × 5⁴. Highest exponent of prime factors in denominator is 4, so it terminates after 4 places." },
+        { q: "If the prime factorization of a number is 2³ × 5² × 7, the number ends with how many zeroes?", opts: ["1", "2", "3", "0"], ans: 1, rat: "Number of trailing zeroes corresponds to min(power of 2, power of 5) = min(3, 2) = 2." },
+        { q: "√2 is a/an:", opts: ["Natural Number", "Rational Number", "Irrational Number", "Whole Number"], ans: 2, rat: "√2 cannot be written as a fraction of two integers, making it irrational." }
     ]
 };
 
@@ -341,11 +343,11 @@ function showQuestion() {
     document.getElementById("nextBtn").style.display = "none";
     document.getElementById("explanationBox").style.display = "none";
 
-    // Progress
-    const progressPercent = ((currentIndex) / questions.length) * 100;
+    // Progress Bar
+    const progressPercent = (currentIndex / questions.length) * 100;
     document.getElementById("progressBar").style.width = progressPercent + "%";
 
-    // Header info
+    // Text Header
     document.getElementById("qNumber").innerText = `Question ${currentIndex + 1} of ${questions.length}`;
     document.getElementById("questionText").innerText = qData.q;
 
@@ -363,7 +365,6 @@ function showQuestion() {
 }
 
 function selectOption(index, element) {
-    // Clear previous selection
     const items = document.querySelectorAll(".option-item");
     items.forEach(item => item.classList.remove("selected"));
 
@@ -377,7 +378,6 @@ function checkAnswer() {
     const qData = questions[currentIndex];
     const items = document.querySelectorAll(".option-item");
 
-    // Disable all options click
     items.forEach(item => item.onclick = null);
 
     if (selectedOption === qData.ans) {
@@ -388,11 +388,9 @@ function checkAnswer() {
         items[qData.ans].classList.add("correct");
     }
 
-    // Display Explanation
     document.getElementById("explanationText").innerText = qData.rat;
     document.getElementById("explanationBox").style.display = "block";
 
-    // Toggle Buttons
     document.getElementById("checkBtn").style.display = "none";
     document.getElementById("nextBtn").style.display = "inline-block";
 }
